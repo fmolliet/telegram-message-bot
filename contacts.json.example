@@ -1,0 +1,13 @@
+{
+    "friends": [
+        {
+            "name"         : "Nome principal",
+            "alias"        : ["Apelido 1"],
+            "id"           : "ID do chat pv ou @",
+            "has_work"     : false,
+            "has_affetuos" : true,
+            "is_lazy"      : true,
+            "only_alias"   : false
+        }
+    ]
+}
