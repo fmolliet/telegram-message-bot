@@ -1,13 +1,15 @@
+import os
+import json
 from telethon import TelegramClient, events, sync
 from decouple import config
-import json
 from random import choice
 
 class Automessager(object): 
 
     def __init__(self):
         super().__init__()
-        self.filename     = config('CONTACTS')
+        project_folder    = os.path.expanduser(os.path.dirname(os.path.abspath(__file__))) 
+        self.filename     = os.path.join(project_folder, config('CONTACTS'))
         self.session_name = config('APP_NAME')
         self.api_id       = config('API_ID')
         self.api_hash     = config('API_HASH')
