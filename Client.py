@@ -3,6 +3,7 @@ import json
 from telethon import TelegramClient, events, sync
 from decouple import config
 from random import choice
+from datetime import datetime
 
 class Automessager(object): 
 
@@ -14,6 +15,7 @@ class Automessager(object):
         self.api_id       = config('API_ID')
         self.api_hash     = config('API_HASH')
         self.client       = TelegramClient(self.session_name, self.api_id , self.api_hash)
+        self.weeknumber   = datetime.today().weekday()
         self.client.start()
     
     def start(self):
@@ -24,7 +26,7 @@ class Automessager(object):
                 
                 self.client.send_message(friend['id'], self.get_rand_msg_dia(friend['has_affetuos']))
                 
-                if friend['has_work'] :
+                if friend['has_work'] and self.weeknumber < 5:
                     self.client.send_message(friend['id'], self.get_rand_msg_trabalho())
                     
     def get_rand_msg_dia(self, has_affetuos) -> str:
