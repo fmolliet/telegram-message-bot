@@ -16,6 +16,7 @@ class Automessager(object):
         self.api_hash     = config('API_HASH')
         self.client       = TelegramClient(self.session_name, self.api_id , self.api_hash)
         self.weeknumber   = datetime.today().weekday()
+        self.hours        = datetime.now().hour
         self.client.start()
     
     def start(self):
@@ -26,34 +27,29 @@ class Automessager(object):
                 
                 self.client.send_message(friend['id'], self.get_rand_msg_dia(friend['has_affetuos']))
                 
-                if friend['has_work'] and self.weeknumber < 5:
+                if friend['has_work'] and self.weeknumber < 5 and self.hours < 13:
                     self.client.send_message(friend['id'], self.get_rand_msg_trabalho())
+                
+                if  self.weeknumber == 5 and self.hours < 13:
+                    self.client.send_message(friend['id'], choice([
+                        'bom sábado para ti',
+                        'e bom sábado também',
+                        'bom sábado'
+                    ]))
+            
+                if self.weeknumber == 6 and self.hours < 13:
+                    self.client.send_message(friend['id'], choice([
+                        'bom domingo para ti',
+                        'e bom doming também',
+                        'bom domingo'
+                    ]))
                     
     def get_rand_msg_dia(self, has_affetuos) -> str:
-        possible_messages = [
-            'Bom dia',
-            'Bundia',
-            'Bom dia hoje pra ti'
-        ]
-        
-        if self.weeknumber == 5:
-            possible_messages.append([
-                'Bom dia e bom sábado para ti',
-                'Bom dia e bom sábado'
-            ])
-            
-        if self.weeknumber == 6:
-            possible_messages.append([
-                'Bom dia e bom domingo para ti',
-                'Bom dia e bom domingo'
-            ])
-        
+        possible_messages = self.get_saudacoes_type()
+    
         if has_affetuos :
-            possible_messages.append([
-                "bom dia meu lindo",
-                "Bom dia fofo"
-            ])
-            
+            possible_messages = possible_messages + [ 'bom dia meu lindo', 'Bom dia fofo']
+        
         return "{} {}".format( choice(possible_messages), choice(self.aliases)  )
         
     def get_rand_msg_trabalho(self) -> str:
@@ -81,3 +77,22 @@ class Automessager(object):
                 "{}!".format(name)
             ]
     
+    def get_saudacoes_type( self ) -> object:
+        if ( self.hours < 12):
+            return [
+                'Bom dia',
+                'Bundia',
+                'Bundinha,'
+                'Bom dia hoje pra ti'
+            ] 
+        elif ( self.hours > 18):
+            return [
+                'Boa noite',
+                'Boa noitinha',
+            ] 
+        else: 
+            return ['Boa tarde',
+                'Boa tarde, tudo bom',
+                'Boa tarde, tudo bem'
+            ]
+        
