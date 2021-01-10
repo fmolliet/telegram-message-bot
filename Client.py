@@ -36,6 +36,18 @@ class Automessager(object):
             'Bom dia hoje pra ti'
         ]
         
+        if self.weeknumber == 5:
+            possible_messages.append([
+                'Bom dia e bom sábado para ti',
+                'Bom dia e bom sábado'
+            ])
+            
+        if self.weeknumber == 6:
+            possible_messages.append([
+                'Bom dia e bom domingo para ti',
+                'Bom dia e bom domingo'
+            ])
+        
         if has_affetuos :
             possible_messages.append([
                 "bom dia meu lindo",
