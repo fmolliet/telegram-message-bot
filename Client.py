@@ -33,7 +33,7 @@ class Automessager(object):
                 if  self.weeknumber == 5 and self.hours < 13:
                     self.client.send_message(friend['id'], choice([
                         'bom sábado para ti',
-                        'e bom sábado também',
+                        'e bom sábado também kk',
                         'bom sábado'
                     ]))
             
@@ -82,7 +82,7 @@ class Automessager(object):
             return [
                 'Bom dia',
                 'Bundia',
-                'Bundinha,'
+                'Bundinha,',
                 'Bom dia hoje pra ti'
             ] 
         elif ( self.hours > 18):
