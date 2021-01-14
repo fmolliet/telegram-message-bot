@@ -18,6 +18,12 @@ class Automessager(object):
         self.weeknumber   = datetime.today().weekday()
         self.hours        = datetime.now().hour
         self.client.start()
+        
+    def send_announce(self, message: str):
+        with open(self.filename) as json_file:
+            data = json.load(json_file)
+            for friend in data['friends']:
+                self.client.send_message(friend['id'], message)
     
     def start(self):
         with open(self.filename) as json_file:
@@ -44,7 +50,7 @@ class Automessager(object):
                         'bom domingo'
                     ]))
                     
-    def get_rand_msg_dia(self, has_affetuos) -> str:
+    def get_rand_msg_dia(self, has_affetuos: bool) -> str:
         possible_messages = self.get_saudacoes_type()
     
         if has_affetuos :
@@ -63,7 +69,7 @@ class Automessager(object):
         return choice(possible_messages)
     
     
-    def get_aliases_choices(self, alias, name) -> object:
+    def get_aliases_choices(self, alias: object, name: str) -> object:
         if alias :
             return [ 
                 ""
